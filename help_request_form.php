@@ -29,12 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Prepare the SQL query
     $sql = "INSERT INTO help_request 
     (help_request_family_id, help_request_phone_number, 
-    help_request_date, help_request_category, help_request_status)
-    VALUES ('{$_SESSION['family_id']}', '$escaped_cell_number', '$escaped_explanation', 
+    help_request_date, help_request_category_id, help_request_status)
+    VALUES ('{$_SESSION['family_id']}', '$escaped_cell_number', 
     '$current_date', '$escaped_category', 'pending')";
 
     // Execute the query
+  
     if (mysqli_query($conn, $sql)) {
+
         $last_id = mysqli_insert_id($conn);
         $success_message = "Help Request Submitted successfully!";
     } else {
@@ -42,9 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 
-
+//Fatal error: Uncaught mysqli_sql_exception: Column count doesn't match value count at row 1 in C:\xampp\htdocs\newgit\newRepo\help_request_form.php:37 Stack trace:
+     #0 C:\xampp\htdocs\newgit\newRepo\help_request_form.php(37): mysqli_query(Object(mysqli), 'INSERT INTO hel...') 
+     #1 {main} thrown in C:\xampp\htdocs\newgit\newRepo\help_request_form.php on line 37
     // File Upload Handling
-    $target_directory = "uploads\\";  // Change this directory to your desired location
+    $target_directory = "uploads\\";  
 
     if (!is_dir($target_directory))
          mkdir ($target_directory,0777,true);
